@@ -42,11 +42,11 @@ const HelloWorldIntentHandler = {
   handle(handlerInput) {
     const speechText = 'You have just unlock secret mode in Sonic! Enjoy!';
 
-    request(options, function (error, response, body) {
+   /* request(options, function (error, response, body) {
       if (error) throw new Error(error);
     
       console.log(body);
-    });
+    });*/
 
     return handlerInput.responseBuilder
       .speak(speechText)
