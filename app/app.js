@@ -34,39 +34,53 @@ var options = { method: 'POST',
   const Alexa = require('ask-sdk-core');
 
 const LaunchRequestHandler = {
-canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
-},
-handle(handlerInput) {
-    const speechText = 'Welcome to the Alexa Skills Kit, you can say hello!';
-    console.log('Welcome to the Alexa Skills Kit, you can say hello!');
-    return handlerInput.responseBuilder
-    .speak(speechText)
-    .reprompt(speechText)
-    .withSimpleCard('Hello World', speechText)
-    .getResponse();
-},
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+    },
+    handle(handlerInput) {
+        const speechText = 'Welcome to the Alexa Skills Kit, you can say hello!';
+        console.log('Welcome to the Alexa Skills Kit, you can say hello!');
+        return handlerInput.responseBuilder
+        .speak(speechText)
+        .reprompt(speechText)
+        .withSimpleCard('Hello World', speechText)
+        .getResponse();
+    },
 };
 
 const HelloWorldIntentHandler = {
-canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-    && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
-},
-handle(handlerInput) {
-    const speechText = 'You have just unlock secret mode in Sonic! Enjoy!';
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+        && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
+    },
+    handle(handlerInput) {
+        const speechText = 'You have just unlock secret mode in Sonic! Enjoy!';
 
-    /* request(options, function (error, response, body) {
-    if (error) throw new Error(error);
-    
-    console.log(body);
-    });*/
+        /* request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        
+        console.log(body);
+        });*/
+
+        return handlerInput.responseBuilder
+        .speak(speechText)
+        .withSimpleCard('Hello World', speechText)
+        .getResponse();
+    },
+};
+
+const ErrorHandler = {
+  canHandle() {
+    return true;
+  },
+  handle(handlerInput, error) {
+    console.log(`Error handled: ${error.message}`);
 
     return handlerInput.responseBuilder
-    .speak(speechText)
-    .withSimpleCard('Hello World', speechText)
-    .getResponse();
-},
+      .speak('Sorry, I can\'t understand the command. Please say again.')
+      .reprompt('Sorry, I can\'t understand the command. Please say again.')
+      .getResponse();
+  },
 };
 
 const skillBuilder = Alexa.SkillBuilders.custom();
