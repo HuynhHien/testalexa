@@ -51,7 +51,7 @@ Webhook.listen(port, () => {
   console.log(`Example server listening on port ${port}!`);
 });
 Webhook.post('/webhook', (req, res) => {
-  app.handleWebhook(req, res);
+  // app.handleWebhook(req, res);
 });
 
 
