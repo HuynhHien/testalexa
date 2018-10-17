@@ -4,14 +4,17 @@
   "description": "I18n version of fact skill.",
   "main": "index.js",
   "scripts": {
-	"start": "node index.js --webhook",
-    "test": "echo \"Error: no test specified\" && exit 1"
+	"start": "node index.js --webhook"
   },
   "keywords": [
     "alexa",
     "skill",
     "fact"
   ],
+	"engines": {
+	"node": "8.12.0",
+	"npm": "6.4.1"
+	},
   "author": "Amazon.com",
   "license": "Apache-2.0",
   "dependencies": {
