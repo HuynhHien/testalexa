@@ -7,6 +7,7 @@ var request = require("request");
 const express = require('express');
 const bodyParser = require('body-parser');
 const http = require('http');
+const {app} = require('./app/app.js');
 
 var options = { method: 'POST',
   url: 'https://fcm.googleapis.com/fcm/send',
