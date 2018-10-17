@@ -4,6 +4,9 @@
 const Alexa = require('ask-sdk-core');
 
 var request = require("request");
+const express = require('express');
+const bodyParser = require('body-parser');
+const http = require('http');
 
 var options = { method: 'POST',
   url: 'https://fcm.googleapis.com/fcm/send',
@@ -18,26 +21,39 @@ var options = { method: 'POST',
   json: true };
 
 
-  const port = process.env.PORT || 3000;
+  const verifiedServer = express();
+verifiedServer.listen = function() {
+    try {
+        const verifier = require('alexa-verifier-middleware');
+        let router = express.Router(); //eslint-disable-line
+        verifiedServer.use(router);
+        router.use(verifier);
+        router.use(bodyParser.json());
+        let server = http.createServer(this);
+        return server.listen.apply(server, arguments); // eslint-disable-line
+    } catch (error) {
+        if (error.code === 'MODULE_NOT_FOUND') {
+            console.log();
+            console.log('  Please install module alexa-verifier-middleware');
+            console.log('  $ npm install alexa-verifier-middleware');
+            console.log();
+        } else {
+            console.log(error);
+        }
+    }
+};
 
-  var http = require('http');
-  var fs = require('fs');
-  var server = http.createServer( function(req, res) {  
-      console.dir(req.param);  
-      if (req.method == 'POST') {
+const Webhook = verifiedServer;
 
-      }
-      else
-      {
-          // console.log("GET");     
-      }  
-  });
-  
-  
-  
-server.listen(port,() => {
+const port = process.env.PORT || 3000;
+
+Webhook.listen(port, () => {
   console.log(`Example server listening on port ${port}!`);
 });
+Webhook.post('/webhook', (req, res) => {
+  app.handleWebhook(req, res);
+});
+
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
