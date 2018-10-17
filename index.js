@@ -17,6 +17,28 @@ var options = { method: 'POST',
      to: 'cQpFHcbb_No:APA91bF9jYYO15dZHJW3FHqOG7SAha0xlDjDDck9wi1NMOY1lZ6eNYDpI7jlFlSfyz_Z5YGXPzbNdKZ6qBiNKrhK7sLhEBOrZee07isoD1LbVUcMaNVjmaryp_mWzpX_hmqrzonVuHyp' },
   json: true };
 
+
+  const port = process.env.PORT || 3000;
+
+  var http = require('http');
+  var fs = require('fs');
+  var server = http.createServer( function(req, res) {  
+      console.dir(req.param);  
+      if (req.method == 'POST') {
+
+      }
+      else
+      {
+          // console.log("GET");     
+      }  
+  });
+  
+  
+  
+server.listen(port,() => {
+  console.log(`Example server listening on port ${port}!`);
+});
+
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
@@ -138,26 +160,7 @@ exports.handler = skillBuilder
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();
+  console.log('exports.handler was called');
 
 
-  const port = process.env.PORT || 3000;
-
-  var http = require('http');
-  var fs = require('fs');
-  var server = http.createServer( function(req, res) {  
-      console.dir(req.param);  
-      if (req.method == 'POST') {
-
-      }
-      else
-      {
-          // console.log("GET");     
-      }  
-  });
   
-  
-  
-server.listen(port,() => {
-  console.log(`Example server listening on port ${port}!`);
-});
-  console.log('Listening at http://' + host + ':' + port);
