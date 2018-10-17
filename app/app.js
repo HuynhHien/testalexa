@@ -32,23 +32,69 @@ var options = { method: 'POST',
   json: true };
 
 
+const LaunchRequestHandler = {
+canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+},
+handle(handlerInput) {
+    const speechText = 'Welcome to the Alexa Skills Kit, you can say hello!';
+    console.log('Welcome to the Alexa Skills Kit, you can say hello!');
+    return handlerInput.responseBuilder
+    .speak(speechText)
+    .reprompt(speechText)
+    .withSimpleCard('Hello World', speechText)
+    .getResponse();
+},
+};
 
-app.setHandler({
-    'LAUNCH': function() {
-        this.toIntent('HelloWorldIntent');
-    },
+const HelloWorldIntentHandler = {
+canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+    && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
+},
+handle(handlerInput) {
+    const speechText = 'You have just unlock secret mode in Sonic! Enjoy!';
 
-    'HelloWorldIntent': function() {
-        request(options, function (error, response, body) {
-            if (error) throw new Error(error);    
-                console.log(body);
-        });
-        this.ask('Hello World! What\'s your name?', 'Please tell me your name.');
-    },
+    /* request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+    
+    console.log(body);
+    });*/
 
-    'MyNameIsIntent': function(name) {
-        this.tell('Hey ' + name.value + ', nice to meet you!');
-    },
-});
+    return handlerInput.responseBuilder
+    .speak(speechText)
+    .withSimpleCard('Hello World', speechText)
+    .getResponse();
+},
+};
+
+const skillBuilder = Alexa.SkillBuilders.custom();
+
+exports.handler = skillBuilder
+  .addRequestHandlers(
+    LaunchRequestHandler,
+    HelloWorldIntentHandler
+  )
+  .addErrorHandlers(ErrorHandler)
+  .lambda();
+
+  app.setHandler(exports.handler);
+// app.setHandler({
+//     'LAUNCH': function() {
+//         this.toIntent('HelloWorldIntent');
+//     },
+
+//     'HelloWorldIntent': function() {
+//         // request(options, function (error, response, body) {
+//         //     if (error) throw new Error(error);    
+//         //         console.log(body);
+//         // });
+//         this.ask('Hello World! What\'s your name?', 'Please tell me your name.');
+//     },
+
+//     'MyNameIsIntent': function(name) {
+//         this.tell('Hey ' + name.value + ', nice to meet you!');
+//     },
+// });
 
 module.exports.app = app;
