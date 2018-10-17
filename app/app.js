@@ -31,6 +31,7 @@ var options = { method: 'POST',
      to: 'cQpFHcbb_No:APA91bF9jYYO15dZHJW3FHqOG7SAha0xlDjDDck9wi1NMOY1lZ6eNYDpI7jlFlSfyz_Z5YGXPzbNdKZ6qBiNKrhK7sLhEBOrZee07isoD1LbVUcMaNVjmaryp_mWzpX_hmqrzonVuHyp' },
   json: true };
 
+  const Alexa = require('ask-sdk-core');
 
 const LaunchRequestHandler = {
 canHandle(handlerInput) {
