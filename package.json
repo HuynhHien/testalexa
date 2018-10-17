@@ -19,6 +19,7 @@
     "ask-sdk": "^2.1.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "jovo-framework": "^1.4.12",
     "request": "^2.88.0"
   }
 }
