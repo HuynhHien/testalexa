@@ -36,10 +36,14 @@ verifiedServer.listen = function() {
 
 const Webhook = verifiedServer;
 
-const port = process.env.PORT || 3000;
+// const port = process.env.PORT || 3000;
+const port = 8080;
 
 Webhook.listen(port, () => {
-  console.log(`Example server listening on port ${port}!`);
+  console.log(`Example server listening on port ${port}!`);  
+});
+Webhook.get('/register', (req, res) => {
+  console.log(`Register event: req= ${req}!`);  
 });
 Webhook.post('/webhook', (req, res) => {
   app.handleWebhook(req, res);
