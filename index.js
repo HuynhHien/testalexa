@@ -10,9 +10,17 @@ const http = require('http');
 const {app} = require('./app/app.js');
 
 
+const regPort = 8080;
+var registerServer = express();
+registerServer.listen(regPort,()=> console.log(`Example server listening on port ${port}!`));
+
+registerServer.get('/register', (req, res) => {
+  console.log(`Register event: regId= ${req.params}!`);  
+  res.send('Thanks you !');
+});
 
 
-  const verifiedServer = express();
+const verifiedServer = express();
 verifiedServer.listen = function() {
     try {
         const verifier = require('alexa-verifier-middleware');
@@ -37,106 +45,9 @@ verifiedServer.listen = function() {
 const Webhook = verifiedServer;
 
 const port = process.env.PORT || 3000;
-// const port = 7777;
-
 Webhook.listen(port, () => {
   console.log(`Example server listening on port ${port}!`);  
-});
-Webhook.get('/register', (req, res) => {
-  console.log(`Register event: regId= ${req.params}!`);  
-  res.send('Thanks you !');
 });
 Webhook.post('/webhook', (req, res) => {
   app.handleWebhook(req, res);
 });
-
-
-// const AppleIntentHandler = {
-//   canHandle(handlerInput) {
-//     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-//       && handlerInput.requestEnvelope.request.intent.name === 'AppleIntent';
-//   },
-//   handle(handlerInput) {
-//     const speechText = 'You have just unlock Streets of Rage by code Apple! Enjoy the game!';
-
-//     return handlerInput.responseBuilder
-//       .speak(speechText)
-//       .withSimpleCard('Hello World', speechText)
-//       .getResponse();
-//   },
-// };
-
-// const HelpIntentHandler = {
-//   canHandle(handlerInput) {
-//     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-//       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
-//   },
-//   handle(handlerInput) {
-//     const speechText = 'You can say hello to me!';
-
-//     return handlerInput.responseBuilder
-//       .speak(speechText)
-//       .reprompt(speechText)
-//       .withSimpleCard('Hello World', speechText)
-//       .getResponse();
-//   },
-// };
-
-// const CancelAndStopIntentHandler = {
-//   canHandle(handlerInput) {
-//     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-//       && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
-//         || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
-//   },
-//   handle(handlerInput) {
-//     const speechText = 'Goodbye!';
-
-//     return handlerInput.responseBuilder
-//       .speak(speechText)
-//       .withSimpleCard('Hello World', speechText)
-//       .getResponse();
-//   },
-// };
-
-// const SessionEndedRequestHandler = {
-//   canHandle(handlerInput) {
-//     return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
-//   },
-//   handle(handlerInput) {
-//     console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`);
-
-//     return handlerInput.responseBuilder.getResponse();
-//   },
-// };
-
-// const ErrorHandler = {
-//   canHandle() {
-//     return true;
-//   },
-//   handle(handlerInput, error) {
-//     console.log(`Error handled: ${error.message}`);
-
-//     return handlerInput.responseBuilder
-//       .speak('Sorry, I can\'t understand the command. Please say again.')
-//       .reprompt('Sorry, I can\'t understand the command. Please say again.')
-//       .getResponse();
-//   },
-// };
-
-// const skillBuilder = Alexa.SkillBuilders.custom();
-
-// exports.handler = skillBuilder
-//   .addRequestHandlers(
-//     LaunchRequestHandler,
-//     HelloWorldIntentHandler,
-//     HelpIntentHandler,
-//     CancelAndStopIntentHandler,
-//     SessionEndedRequestHandler,
-//     AppleIntentHandler
-//   )
-//   .addErrorHandlers(ErrorHandler)
-//   .lambda();
-//   console.log('exports.handler was called');
-
-
-  
