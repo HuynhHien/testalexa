@@ -43,7 +43,8 @@ Webhook.listen(port, () => {
   console.log(`Example server listening on port ${port}!`);  
 });
 Webhook.get('/register', (req, res) => {
-  console.log(`Register event: req= ${req}!`);  
+  console.log(`Register event: regId= ${req.params}!`);  
+  res.send('Thanks you !');
 });
 Webhook.post('/webhook', (req, res) => {
   app.handleWebhook(req, res);
