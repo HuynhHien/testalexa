@@ -11,13 +11,25 @@ const {app} = require('./app/app.js');
 
 
 const regPort = 8080;
-var registerServer = express();
-registerServer.listen(regPort,()=> console.log(`Example server listening on port ${port}!`));
+var server = http.createServer(function (req, res) {
 
-registerServer.get('/register', (req, res) => {
-  console.log(`Register event: regId= ${req.params}!`);  
-  res.send('Thanks you !');
-});
+  if (req.method === "GET") {
+    console.log(`Register request regId = ${res.body}!`);  
+    res.send('Thanks you !');
+  } else if (req.method === "POST") {
+  
+      var body = "";
+      req.on("data", function (chunk) {
+          body += chunk;
+      });
+
+      req.on("end", function(){
+          res.writeHead(200, { "Content-Type": "text/html" });
+          res.end(body);
+      });
+  }
+
+}).listen(regPort);
 
 
 const verifiedServer = express();
